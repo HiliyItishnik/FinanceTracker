@@ -1,0 +1,3 @@
+package ru.portfolio.finance;
+import org.springframework.web.bind.annotation.*; import java.time.LocalDate; import java.util.*;
+@RestController @RequestMapping("/api/transactions") public class TransactionController { private final TransactionRepository repo; public TransactionController(TransactionRepository r){repo=r;} @GetMapping List<Transaction> list(@RequestParam(required=false) LocalDate from,@RequestParam(required=false) LocalDate to){if(from!=null&&to!=null)return repo.findByTransactionDateBetween(from,to); return repo.findAll();} @PostMapping Transaction create(@RequestBody Transaction t){return repo.save(t);} }
